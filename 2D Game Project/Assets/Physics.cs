@@ -14,7 +14,7 @@ public class Physics : MonoBehaviour
         Transform playerTransform = player.transform;
         Vector2 pos = playerTransform.position;
         Debug.Log(pos);
-
+   
     }
 
     // Update is called once per frame
