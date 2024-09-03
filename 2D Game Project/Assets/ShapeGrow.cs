@@ -5,17 +5,24 @@ using UnityEngine;
 
 public class ShapeGrow : MonoBehaviour
 {
+    //>>>>>CREATE A VAR THAT IS IN THE SCOPE OF THE ENTIRE CLASS
+    //>>>>>EXPLAIN VARIABLE 
+    //>>>>>EXPLAIN SCOPE
+
     //transform component of the square
     //create a variable of type Transform stores it in transformSquare
     private Transform transformSquare;
+
+    //>>>>>FLOAT IS A DATA TYPE
+    //>>>>>EXPLAIN DATA TYPES
     public float moveSpeed;
     public float growSpeed;
     //growth rate along x and y axis
     public int x;
     public int y;
 
-    //private float minX = -6.0f;
-    //private float maxX = 6.0f;
+    //public float minX = -6.0f;
+    //public float maxX = 6.0f;
 
     //direction of movement: 1 means to the right, -1 means to the left
     //private int direction = 1;
@@ -36,6 +43,8 @@ public class ShapeGrow : MonoBehaviour
         //new vector3 creates a vector that represents the change in position
         //move speed: speed at which square moves
         //time.deltaTime ensures smooth movement by scaling the speed according to the frame rate
+
+        //>>>>>OPERATORS: some special symbols that perform some action on operands
         //the resulting vector is added to the current pos (+=) it adds value on the right side to the var on the left side and stores it back in there
         //(.) .position accesses the properties of an object, .position access the property of the transformSquare object
         transformSquare.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
@@ -56,7 +65,7 @@ public class ShapeGrow : MonoBehaviour
         }*/
 
         //transform local scale will only happen if local scale.y is less than 6
-        /*if(transformSquare.localScale.y < 6)
+        /*if(transformSquare.localScale.y <= 6)
         {
             transform.localScale += new Vector3(x, y, 0) * growSpeed * Time.deltaTime;
         }*/
