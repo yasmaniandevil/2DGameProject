@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShapeGrow : MonoBehaviour
 {
     //>>>>>CREATE A VAR THAT IS IN THE SCOPE OF THE ENTIRE CLASS
-    //>>>>>EXPLAIN VARIABLE 
+    //>>>>>EXPLAIN VARIABLE and how to name them
     //>>>>>EXPLAIN SCOPE
 
     //transform component of the square
@@ -48,12 +48,14 @@ public class ShapeGrow : MonoBehaviour
         //the resulting vector is added to the current pos (+=) it adds value on the right side to the var on the left side and stores it back in there
         //(.) .position accesses the properties of an object, .position access the property of the transformSquare object
         transformSquare.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
+        Debug.Log("Transform Square Pos: " + transformSquare.position);
 
         //transform.local scale gets current localScale of the square
         //new Vector3 creates a vector that represents the change in scale
         //x and y: define how much the square should grow along x and y axis
         //resulting vector added to current scale (+=)
-        transform.localScale += new Vector3 (x,y, 0) * growSpeed * Time.deltaTime;
+        transformSquare.localScale += new Vector3 (x,y, 0) * growSpeed * Time.deltaTime;
+        Debug.Log("Square scale: " + transformSquare.localScale);
 
         //added with direction it knows to move right
         //transformSquare.position += new Vector3(moveSpeed * direction * Time.deltaTime, 0, 0);
