@@ -60,12 +60,14 @@ public class ShapeGrow : MonoBehaviour
         //added with direction it knows to move right
         //transformSquare.position += new Vector3(moveSpeed * direction * Time.deltaTime, 0, 0);
 
+        //if it hits either side of the game
         //if the square position on the x axis is greater than maxX or less than minX reverse the direction
         /*if (transformSquare.position.x > maxX || transformSquare.position.x < minX)
         {
             direction *= -1;
         }*/
 
+        //stops scaling after it reaches out of bounds
         //transform local scale will only happen if local scale.y is less than 6
         /*if(transformSquare.localScale.y <= 6)
         {
