@@ -7,7 +7,7 @@ public class ObjectSpawner : MonoBehaviour
 {
 
     public GameObject objectPrefab;
-    public GameObject particles;
+    //public GameObject particles;
     
 
     // Start is called before the first frame update
@@ -25,15 +25,21 @@ public class ObjectSpawner : MonoBehaviour
             //random.range anything from -6 to 6 on the x axis
             //anything -3, 3 on the y axis
             //becausr it only takes two values here x and y, z is always 0
+
             //Vector3 randomPosition = new Vector3(Random.Range(-6, 6), Random.Range(-3, 3));
             //Vector3 randomScale = new Vector3(Random.Range(.5f, 2), Random.Range(2, .5f), 1);
+
             //spawn obj function takes position and scale
             //we are passing in position and scale
+
             //calling the function here
             //SpawnObject(randomPosition, randomScale);
-            GameObject newObj = Instantiate(particles, new Vector3(-1, 0, 0), Quaternion.identity);
+
+            //GameObject newObj = Instantiate(particles, new Vector3(-1, 0, 0), Quaternion.identity);
+            //Destroy(newObj, 2f);
+
             SpawnObject(new Vector3(0,0,0), new Vector3(1,1,1));
-            Destroy(newObj, 2f);
+            
         }
        
     }
