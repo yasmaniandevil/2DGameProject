@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -10,6 +11,9 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rb2D;
     //float will store the vertical velocity when jumping
     public float jumpForce = 5f;
+
+    public TextMeshProUGUI scoreText;
+    private int score = 0;
 
     private Transform transformSquare;
     //public GameObject particleEffect;
@@ -22,6 +26,8 @@ public class Movement : MonoBehaviour
        rb2D = GetComponent<Rigidbody2D>();
 
        transformSquare = GetComponent<Transform>();
+
+        UpdateScore();
     }
 
     // Update is called once per frame
@@ -63,6 +69,8 @@ public class Movement : MonoBehaviour
     {
         Debug.Log("Hit!");
         Debug.Log(collision.gameObject.name);
+        score++;
+        UpdateScore();
 
         //transformSquare.position = new Vector3(0,0,0);
         //Destroy(collision.gameObject);
@@ -75,5 +83,10 @@ public class Movement : MonoBehaviour
     {
         Debug.Log("HitTrigger");
 
+    }
+
+    void UpdateScore()
+    {
+        scoreText.text = "Score: " + score;
     }
 }

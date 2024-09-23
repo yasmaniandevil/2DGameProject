@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TwoBullet : MonoBehaviour
@@ -8,6 +9,10 @@ public class TwoBullet : MonoBehaviour
     private Rigidbody2D rb2D;
     //speed at which the bullet moves
     public float moveSpeed = 10;
+    //refrence to TMP Text
+    public TextMeshProUGUI scoreText;
+    private int playerScore = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +20,8 @@ public class TwoBullet : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         //call the movebullet function to set inital velocity of the bullet
         MoveBullet(Vector3.right, moveSpeed);
+
+        UpdateScoreText();
     }
 
     // Update is called once per frame
@@ -42,6 +49,18 @@ public class TwoBullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Hit");
+        AddPoints(1);
         
+    }
+
+    public void AddPoints(int points)
+    {
+        playerScore += points;
+        UpdateScoreText();
+    }
+
+    private void UpdateScoreText()
+    {
+        scoreText.text = playerScore.ToString();
     }
 }
