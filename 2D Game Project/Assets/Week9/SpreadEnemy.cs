@@ -7,6 +7,7 @@ public class SpreadEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        UpdateHealthText();
         Shoot();
     }
 
@@ -16,9 +17,12 @@ public class SpreadEnemy : Enemy
         
     }
 
+    //overrid replaces and overrides the shoot method in base class
     public override void Shoot()
     {
         //shoot multiple bullets in spread pattern
+        //loop iterates 3 times with i taliing the values -1, 0, and 1
+        //i= -1 angles to the left i=0 straight down i = 1 angled to the right
         float angleStep = 10f;
         for(int i = -1; i <= 1; i++)
         {

@@ -25,6 +25,7 @@ public class BulletEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.GetComponent<Ship>().TakeDamage(damage);
+            Destroy(gameObject);
             Debug.Log("took damage");
         }
     }

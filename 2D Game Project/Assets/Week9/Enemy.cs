@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -10,20 +11,28 @@ public class Enemy : MonoBehaviour
 
     private float shootTimer = 0f;
 
+    //textmeshugui is just for canvas text
+    //tmp_text is 3D world space
+    public TMP_Text enemyHealthText;
+
     // Start is called before the first frame update
     void Start()
     {
-       
+       UpdateHealthText();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //time.deltatime represents amount of time that has passed since last frame
+        //value is added to shoottimer every frame so shoottimer increases
         shootTimer += Time.deltaTime;
+        //checks to see if enough time has passed defined by shoot interval if it has it will let you shoot again
         if (shootTimer >= shootInterval)
         {
             Shoot();
             Debug.Log("shot called");
+            //countdown can restart for next shot
             shootTimer = 0f;
         }
 
@@ -46,10 +55,18 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        UpdateHealthText();
         if(health <= 0)
         {
             //GameOverText
+            Destroy(gameObject);
+            Debug.Log("Health is 0");
 
         }
+    }
+
+    public void UpdateHealthText()
+    {
+        enemyHealthText.text = "Health: " + health.ToString();
     }
 }
