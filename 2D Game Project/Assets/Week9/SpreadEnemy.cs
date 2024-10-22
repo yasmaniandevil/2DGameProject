@@ -5,16 +5,15 @@ using UnityEngine;
 public class SpreadEnemy : Enemy
 {
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        UpdateHealthText();
-        Shoot();
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
     }
 
     //overrid replaces and overrides the shoot method in base class
@@ -28,6 +27,7 @@ public class SpreadEnemy : Enemy
         {
             Instantiate(bulletPrefab, transform.position, Quaternion.Euler(0, 0, angleStep * i));
         }
+        Debug.Log("called spread enemy shoot");
 
     }
 }

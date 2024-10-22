@@ -919,7 +919,11 @@ MonoBehaviour:
   - {fileID: 2186568240860896042, guid: 437e41bc13a36496980929e175eadea7, type: 3}
   spawnInterval: 3
   spawnRangeX: 7
+  spawnRadius: 1
   maxEnemies: 3
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &1435223199
 Transform:
   m_ObjectHideFlags: 0

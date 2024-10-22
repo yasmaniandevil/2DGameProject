@@ -16,13 +16,13 @@ public class Enemy : MonoBehaviour
     public TMP_Text enemyHealthText;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
        UpdateHealthText();
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         //time.deltatime represents amount of time that has passed since last frame
         //value is added to shoottimer every frame so shoottimer increases

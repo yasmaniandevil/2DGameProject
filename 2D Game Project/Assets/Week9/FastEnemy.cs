@@ -5,16 +5,16 @@ using UnityEngine;
 public class FastEnemy : Enemy
 {
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        UpdateHealthText();
-        Shoot();
+        base.Start();
+        
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
     }
 
     public override void Shoot()

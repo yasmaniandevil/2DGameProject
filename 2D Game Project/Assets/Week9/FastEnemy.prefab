@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6794783112251554782}
   - component: {fileID: 8527973481393515910}
   - component: {fileID: 7112217088506083556}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FastEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3516551783363657040}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
-  shootInterval: 1
+  shootInterval: 2
   bulletPrefab: {fileID: 3944121777636969636, guid: e4db2ec56fe9f4a68a998c94d5cf738c, type: 3}
   enemyHealthText: {fileID: 3353119647279811191}
 --- !u!1 &6712512012099891063
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 6769857017352524664}
   - component: {fileID: 3147170930389964636}
   - component: {fileID: 3353119647279811191}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

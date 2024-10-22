@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3951090928039545292}
   - component: {fileID: 4936015676327502007}
   - component: {fileID: -3170274812050942072}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SpreadEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2186568240860896042}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
-  shootInterval: 3
+  shootInterval: 8
   bulletPrefab: {fileID: 3944121777636969636, guid: e4db2ec56fe9f4a68a998c94d5cf738c, type: 3}
   enemyHealthText: {fileID: 5923174507270111863}
 --- !u!1 &4542252065979539427
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 4057252326707847734}
   - component: {fileID: 4927288621003481101}
   - component: {fileID: 5923174507270111863}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

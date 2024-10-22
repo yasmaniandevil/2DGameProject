@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5701344382751596824}
   - component: {fileID: 5335077797274726468}
   - component: {fileID: 5620486408007309594}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 4431491417190529703}
   - component: {fileID: 6537145677563804388}
   - component: {fileID: 860210044561854726}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BaseEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
