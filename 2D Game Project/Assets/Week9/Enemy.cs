@@ -36,6 +36,10 @@ public class Enemy : MonoBehaviour
             shootTimer = 0f;
         }
 
+        //for the first .5seconds player cant shoot as shootTimer is increasing
+        //after .5 seconds shoot function is called firing, then timer resets
+        //cycle repeats
+
     }
 
     public virtual void Shoot()
@@ -54,6 +58,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        //subtracting damage from health
         health -= damage;
         UpdateHealthText();
         if(health <= 0)
