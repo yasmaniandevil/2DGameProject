@@ -17,10 +17,16 @@ public class AnimationController : MonoBehaviour
     private List<string> avaiableMoves = new List<string> {"LeftArmUp", "LeftArmDown", "RightArmUp",
     "RightArmDown", "LeftKick", "RightKick"};
 
+    //threshold after which speed increases
+    private int speedIncreaseThreshold = 5;
+    private float normalSpeed = 2f;
+    private float increaseSpeed = 1f;
+
+
     // Start is called before the first frame update
     void Start()
     {
-
+        SetAnimationSpeed(normalSpeed);
     }
 
     // Update is called once per frame
@@ -104,6 +110,12 @@ public class AnimationController : MonoBehaviour
             Debug.Log("Charachter added random move: " + randomMove);
         }
 
+        if(targetMoves.Count >= speedIncreaseThreshold)
+        {
+            SetAnimationSpeed(increaseSpeed);
+            Debug.Log("called increased speed");
+        }
+
         Debug.Log("Character sequence added: " + string.Join(", ", targetMoves.ToArray()));
     }
 
@@ -159,9 +171,16 @@ public class AnimationController : MonoBehaviour
         if(playerMoves.Count == targetMoves.Count)
         {
             Debug.Log("Match");
-            playerMoves.Clear();
-            targetMoves.Clear();
+            //playerMoves.Clear();
+            //targetMoves.Clear();
         }
         
+    }
+
+    private void SetAnimationSpeed(float speed)
+    {
+        characterAnimator.SetFloat("AnimationSpeed", speed);
+        playerAnimator.SetFloat("AnimationSpeed", speed);
+
     }
 }
