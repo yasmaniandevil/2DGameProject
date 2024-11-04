@@ -19,6 +19,7 @@ public class PlayerMove : MonoBehaviour
     private float moveTime = 0.5f;
 
     public List<GameObject> disappearingPlatforms = new List<GameObject>();
+    public List<GameObject> fallingPlatforms = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +60,7 @@ public class PlayerMove : MonoBehaviour
             //SceneManager.LoadScene(1);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -69,15 +71,21 @@ public class PlayerMove : MonoBehaviour
             //set it to true
             //isGrounded = true;
 
+            //in physics the normal vector is a perpendicular line pointing
+            //away from the surface at the point of contact
+            //the direction of this vector tells us where the surface is in relation to the player
             Debug.Log("colliding points: " + collision.contacts.Length);
             Debug.Log("Normal: " + collision.contacts[0].normal);
 
+            //gives us normal vector of the first contact point
             Vector2 normal = collision.GetContact(0).normal;
+            //vector2.up is 0, 1 which points straight up
             if (normal == Vector2.up)
             {
                 isGrounded = true;
             }
 
+            //we can say var or we can say ContactPoint2D
             foreach(var item in collision.contacts)
             {
                 Debug.DrawLine(item.point, item.normal * 100, Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f), 10f);
@@ -93,6 +101,18 @@ public class PlayerMove : MonoBehaviour
         {
             //sets grounded to false
             isGrounded = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Collectible"))
+        {
+            collision.gameObject.SetActive(false);
+            playerLives++;
+            UpdateLivesText();
+            isGrounded = true;
+
         }
     }
 
@@ -123,6 +143,14 @@ public class PlayerMove : MonoBehaviour
                 {
                     platform.GetComponent<dissapearingPlatform>().ResetPlatform();
                 }
+
+                foreach(GameObject platform in fallingPlatforms)
+                {
+                    platform.GetComponent<FallPlatform>().ResetPlatform();
+                    Debug.Log("called falling platforms");
+                }
+
+
 
                 //reset move time for next fall
                 moveTime = 0;
