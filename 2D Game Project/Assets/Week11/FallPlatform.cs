@@ -8,7 +8,7 @@ public class FallPlatform : MonoBehaviour
     public bool playerOnPlatform = false;
     private bool isFalling;
     private List<Vector3> initalPositions = new List<Vector3>();
-     
+    private Collider2D parentCollider;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +18,8 @@ public class FallPlatform : MonoBehaviour
             
             initalPositions.Add(child.localPosition);
         }
+
+        parentCollider = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -52,7 +54,6 @@ public class FallPlatform : MonoBehaviour
         {
             playerOnPlatform = false;
             isFalling = false;
-            StopAllCoroutines();
             fallTime = 2f;
 
         }
@@ -60,11 +61,13 @@ public class FallPlatform : MonoBehaviour
 
     private IEnumerator GallingObject()
     {
+        parentCollider.enabled = false;
+
         Rigidbody2D[] childRigidbodies = GetComponentsInChildren<Rigidbody2D>();
         
         foreach(Rigidbody2D rb in childRigidbodies)
         {
-
+            rb.isKinematic = false;
             rb.gravityScale = 1.0f;
             yield return new WaitForSeconds(3);
         }
@@ -73,8 +76,10 @@ public class FallPlatform : MonoBehaviour
 
     public void ResetPlatform()
     {
+        StopAllCoroutines();
+        parentCollider.enabled = true;
         //loop through each child and reset its position
-        for(int i = 0; i < initalPositions.Count; i++)
+        for (int i = 0; i < initalPositions.Count; i++)
         {
             Transform child = transform.GetChild(i);
             child.localPosition = initalPositions[i];
@@ -83,6 +88,7 @@ public class FallPlatform : MonoBehaviour
             Rigidbody2D rb = child.GetComponent<Rigidbody2D>();
             if(rb != null)
             {
+                rb.isKinematic = true;
                 rb.gravityScale = 0f;
                 rb.velocity = Vector2.zero;
             }

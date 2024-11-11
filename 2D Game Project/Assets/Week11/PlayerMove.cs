@@ -15,12 +15,27 @@ public class PlayerMove : MonoBehaviour
     private int playerLives = 5;
     public TextMeshProUGUI livesText;
 
-    public Transform respawn;
+    public GameObject respawnPos;
     private float moveTime = 0.5f;
 
-    public List<GameObject> disappearingPlatforms = new List<GameObject>();
-    public List<GameObject> fallingPlatforms = new List<GameObject>();
+    public List<GameObject> disappearingPlatformsList = new List<GameObject>();
+    public List<GameObject> fallingPlatformsList = new List<GameObject>();
 
+    public static PlayerMove instance;
+
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -28,12 +43,6 @@ public class PlayerMove : MonoBehaviour
 
         //display lives text on start so it shows up
         UpdateLivesText();
-
-        //find all disappearing platforms in the scene automatically
-        if(disappearingPlatforms == null || disappearingPlatforms.Count == 0)
-        {
-
-        }
     }
 
     // Update is called once per frame
@@ -57,8 +66,8 @@ public class PlayerMove : MonoBehaviour
         //restarts the scene
         if (Input.GetKey(KeyCode.R))
         {
-            //SceneManager.LoadScene(1);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(1);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
     }
@@ -114,6 +123,8 @@ public class PlayerMove : MonoBehaviour
             isGrounded = true;
 
         }
+
+       
     }
 
     //function that keeps lives text updated!
@@ -133,18 +144,18 @@ public class PlayerMove : MonoBehaviour
             if(moveTime < 0)
             {
                 //respawn the player
-                transform.position = respawn.position;
+                transform.position = respawnPos.transform.position;
                 //decreases a life
                 playerLives--;
                 //update the lives text
                 UpdateLivesText();
 
-                foreach(GameObject platform in disappearingPlatforms)
+                foreach(GameObject platform in disappearingPlatformsList)
                 {
                     platform.GetComponent<dissapearingPlatform>().ResetPlatform();
                 }
 
-                foreach(GameObject platform in fallingPlatforms)
+                foreach(GameObject platform in fallingPlatformsList)
                 {
                     platform.GetComponent<FallPlatform>().ResetPlatform();
                     Debug.Log("called falling platforms");
