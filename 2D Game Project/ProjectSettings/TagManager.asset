@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Ground
   - Checkpoint
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -18,9 +19,9 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
-  - 
+  - Wall
+  - Player
+  - Bullet
   - 
   - 
   - 
