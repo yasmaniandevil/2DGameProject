@@ -17,6 +17,7 @@ public class PlayerProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //bullet movement
         transform.Translate(Vector2.right * direction * bulletSpeed * Time.deltaTime);
     }
 

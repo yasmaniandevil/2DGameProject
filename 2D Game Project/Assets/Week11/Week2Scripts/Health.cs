@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
         //come back to this later in lesson
         if (isShieled)
         {
-            shieldTimer = Time.deltaTime;
+            shieldTimer -= Time.deltaTime;
 
             if(shieldTimer <= 0f)
             {
@@ -73,7 +73,7 @@ public class Health : MonoBehaviour
 
         livesText.text = "Health: " + lives.ToString();
     }
-
+    //activate shield and give it an amount of time
     public void ActivateShield(float duration)
     {
         isShieled = true;
@@ -85,4 +85,6 @@ public class Health : MonoBehaviour
     {
         Debug.Log("player has died");
     }
+
+    
 }

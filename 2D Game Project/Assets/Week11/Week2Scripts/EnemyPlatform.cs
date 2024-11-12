@@ -102,15 +102,19 @@ public class EnemyPlatform : MonoBehaviour
 
     private void DamagePlayer()
     {
+        //if player health script exists
         if((playerHealth != null))
         {
+            //and if the player is shielded
             if(playerHealth.isShieled)
             {
                 Debug.Log("player is shielded no damage");
                 return;
             }
 
+            //if they arent they take damage
             playerHealth.TakeDamage(damage);
+            //set damage to true so they dont continue to take damager
             isPlayerDamaged = true;
         }
     }
@@ -119,6 +123,7 @@ public class EnemyPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            //when the player exits isplayerdamage is false so they cant take anymore
             isPlayerDamaged = false;
             Debug.Log("player out of range");
             

@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class MovePlatformPlayer : MonoBehaviour
 {
+    //horizontalInput
     private float horizontalInput;
+    //movement speed
     public int speed = 5;
     private Rigidbody2D rb2d;
+    //force applied for jumping
     public int jumpForce = 10;
+    //check if player is facing right or left
     private bool isFacingRight = true;
 
+    //wall interaction
+    //flag to check if player is wall sliding
     bool isWallSliding;
+    //speed of sliding down wall
     float wallSlidingSpeed = 2f;
 
+    //flag to check if player is wall jumping
     bool isWallJumping;
+    //direction for wall jump
     float wallJumpingDirection;
+    //time window for wall jump
     float wallJumpingTime = .2f;
+    //counter for wall jumping time
     float wallJumpingCounter;
+    //duration of wall jump
     float wallJumpingDuration = .4f;
+    //force for wall jump
     private Vector2 wallJumpingPower = new Vector2(5f, 10f);
 
+    //collision detection variables
     public float checkRadius = 0.2f;
     public Transform groundCheck;
     public LayerMask groundLayer;
@@ -28,6 +42,7 @@ public class MovePlatformPlayer : MonoBehaviour
 
     public GameObject respawnPos;
 
+    //shooting variables
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
     private float shootTimer;
@@ -44,13 +59,13 @@ public class MovePlatformPlayer : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
 
-        //rb2d.velocity = new Vector2(horizontalInput * speed, rb2d.velocity.y);
-
+        //when w is pressed and player is grouded they can jump
         if (Input.GetKeyDown(KeyCode.W) && isGrounded())
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
         }
 
+        //if player releases the w key while moving upwards, reduces jump height
         if(Input.GetKeyUp(KeyCode.W) && rb2d.velocity.y > 0f)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y * 0.5f);
@@ -60,16 +75,19 @@ public class MovePlatformPlayer : MonoBehaviour
         WallJump();
         Respawn();
 
+        //flip character based on movement direction but not if they are wall jumping
         if(!isWallJumping)
         {
             Flip();
         }
 
+        //handles shooting when player hits e 
         shootTimer += Time.deltaTime;
         if(Input.GetKey(KeyCode.E) && shootTimer >= shootInterval)
         {
             Shoot();
             Debug.Log("called shoot");
+            //reset timer
             shootTimer = 0f;
         }
     }
@@ -78,20 +96,26 @@ public class MovePlatformPlayer : MonoBehaviour
     //consistent time intervals indepdent of frame rate. 
     private void FixedUpdate()
     {
+        //if not wall jumping, apply horizontal movement 
         if (!isWallJumping)
         {
             rb2d.velocity = new Vector2(horizontalInput * speed, rb2d.velocity.y);
         }
     }
 
+    //flip the players direction sprite to face the direction of movement
     private void Flip()
     {
         if(isFacingRight && horizontalInput < 0 || !isFacingRight && horizontalInput > 0f)
         {
+            //toggle facing direction, this just does the opposite of whatever it is, flips it
             isFacingRight = !isFacingRight;
+            //we use local scale because its more efficient than roating an object
+            //get current local scale store in var
             Vector3 localScale = transform.localScale;
+            //flip the sprite on the x-axis
             localScale.x *= -1f;
-            transform.localScale = localScale;
+            transform.localScale = localScale; //set flipped scale back to the objects localscale
         }
     }
     //checks if player is touching ground retuns true or false
@@ -109,22 +133,28 @@ public class MovePlatformPlayer : MonoBehaviour
         return walled;
     }
 
+    
     private void WallSlide()
     {
+        //when player is against the wall and not grounded
         if ((isWalled() && !isGrounded() && horizontalInput != 0f))
         {
             isWallSliding = true;
             //Debug.Log("player is wall sliding");
+            //slide down the wall with limited speed
             rb2d.velocity = new Vector2(rb2d.velocity.x, Mathf.Clamp(rb2d.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
         else
         {
+            //player is not wall sliding
             isWallSliding = false;
         }
     }
 
+    //jumping off of walls
     private void WallJump()
     {
+        //if player is wall sliding prepare for wall jump
         if(isWallSliding)
         {
             //Debug.Log("player is wall sliding and preparing wall jump");
@@ -136,12 +166,14 @@ public class MovePlatformPlayer : MonoBehaviour
         }
         else
         {
+            //decrease wall jump over time
             wallJumpingCounter -= Time.deltaTime; //decrease timer
         }
-
-        if(Input.GetKey(KeyCode.W) && wallJumpingCounter > 0f)
+        // If the player presses W within the wall jump window
+        if (Input.GetKey(KeyCode.W) && wallJumpingCounter > 0f)
         {
             isWallJumping = true;
+            //apply wall jump force
             rb2d.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f; //reset counter
 
@@ -166,6 +198,7 @@ public class MovePlatformPlayer : MonoBehaviour
 
     private void Respawn()
     {
+        //if player is below certain number and is not grounded respawn
         if(transform.position.y < 0 && !isGrounded())
         {
             transform.position = respawnPos.transform.position;
@@ -179,11 +212,13 @@ public class MovePlatformPlayer : MonoBehaviour
         {
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             //set direction based on players facing direction
+            //shorthand for writing if statement (if(isfacingright) bulletdirection =1 else bulletdiretion = -1
             float bulletDirection = isFacingRight ? 1f : -1f;
             PlayerProjectile bulletScript = bullet.GetComponent<PlayerProjectile>();
 
             if(bulletScript != null )
             {
+                //set direction for the bullet
                 bulletScript.SetDirection(bulletDirection);
             }
         }
@@ -194,7 +229,26 @@ public class MovePlatformPlayer : MonoBehaviour
     }
 
 
+    //give player an extra life 
+    //last thing we do
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Collectible"))
+        {
 
+            Health playerHealth = GetComponent<Health>();
+            //add extra life
+            playerHealth.lives++;
+            //update lives text
+            playerHealth.UpdateLivesText();
+            Destroy(collision.gameObject);
+        }
+    }
 
+    /*Jumping:
+    When the player presses the W key and is standing on the ground, they will jump upwards. If the player is already going up, releasing the W key will make the jump shorter (by reducing the upward speed).
 
+    Wall Sliding and Wall Jumping:
+    If the player is against a wall and not on the ground, the player will slide down the wall slowly.
+    If the player is sliding on the wall and presses W, they can perform a wall jump, pushing away from the wall to jump in the opposite direction.*/
 }
