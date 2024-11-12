@@ -133,15 +133,21 @@ public class MovePlatformPlayer : MonoBehaviour
         return walled;
     }
 
-    
+    //in order to wall jump we have to wall slide first because we are able to jump with force off the walls when we slide
     private void WallSlide()
     {
-        //when player is against the wall and not grounded
+        //not on the ground, on the wall, and horizontal input is -1 or 1
         if ((isWalled() && !isGrounded() && horizontalInput != 0f))
         {
             isWallSliding = true;
             //Debug.Log("player is wall sliding");
-            //slide down the wall with limited speed
+            //slide down the wall with limited speed\
+            //controlling vertical movement
+            //adjusts players velocity based on condition (wall sliding)
+            //mathf.clamp restricts vertical speed within a range, it has 3 parameters
+            //1st: speed at which player is moving up or down
+            //minimum value for vertical velocity when player is wall slider ensures player doesnt fall down too quickly
+            //third parametere: max value for vertical velocity (largest possible float number) there is no limit on upward velocity
             rb2d.velocity = new Vector2(rb2d.velocity.x, Mathf.Clamp(rb2d.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
         else
@@ -154,12 +160,14 @@ public class MovePlatformPlayer : MonoBehaviour
     //jumping off of walls
     private void WallJump()
     {
+        //turn off walljumping so we can do a new one
         //if player is wall sliding prepare for wall jump
         if(isWallSliding)
         {
             //Debug.Log("player is wall sliding and preparing wall jump");
             isWallJumping = false;
             wallJumpingDirection = -transform.localScale.x; //jump in the opposite direction
+            //wall jumping counter: how much time is left before the player can walljump again  
             wallJumpingCounter = wallJumpingTime; //reset timer for jumping window
 
             CancelInvoke(nameof(StopWallJumping)); //cancel any pending wall jump stops

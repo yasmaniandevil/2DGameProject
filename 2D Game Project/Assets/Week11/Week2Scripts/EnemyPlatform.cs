@@ -109,6 +109,7 @@ public class EnemyPlatform : MonoBehaviour
             if(playerHealth.isShieled)
             {
                 Debug.Log("player is shielded no damage");
+                //return used to exit method early and stop further execution of code if specific condition is met
                 return;
             }
 
