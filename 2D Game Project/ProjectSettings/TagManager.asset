@@ -9,7 +9,6 @@ TagManager:
   - Collectible
   - Enemy
   - Ground
-  - Checkpoint
   layers:
   - Default
   - TransparentFX
@@ -17,7 +16,7 @@ TagManager:
   - Enemy
   - Water
   - UI
-  - Ground
+  - 
   - 
   - 
   - 
